@@ -6,8 +6,8 @@
 
 ///  Group multiple import statements in a single one,
 ///  as well in order to minimize the number of import in our files.
-library credentials_bloc;
+library login_bloc;
 
-export 'credentials_bloc/bloc.dart';
-export 'credentials_bloc/events.dart';
-export 'credentials_bloc/states.dart';
+export 'login_bloc/bloc.dart';
+export 'login_bloc/events.dart';
+export 'login_bloc/states.dart';

@@ -1,6 +1,6 @@
 import 'package:auth_app/blocs/auth_bloc/events.dart';
 import 'package:auth_app/blocs/auth_bloc/states.dart';
-import 'package:auth_app/services/Authentication.dart';
+import 'package:auth_app/services/auth_api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 ///------------------------------------------------------------------
@@ -13,9 +13,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// Manages the authentication state of the app
 /// [AuthenticationBloc] is managed by the  bloc library - provides automatic stream management for us.
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final AuthenticationService authService;
+  final AuthenticationApi authApi;
 
-  AuthenticationBloc(this.authService) : super(const AuthenticationInit()) {
+  AuthenticationBloc(this.authApi) : super(const AuthenticationInit()) {
     // Mapping events to theirs corresponding state based on the business logic
     on<LoggedIn>(_onLoggedIn);
     on<LoggedOut>(_onLoggedOut);
@@ -27,7 +27,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
 
   void _onLoggedOut(LoggedOut event, Emitter<AuthenticationState> emit) async {
     emit(const AuthenticationLoading());
-    await authService.signOut();
+    await authApi.signOut();
     emit( const AuthenticationRevoked());
 
   }

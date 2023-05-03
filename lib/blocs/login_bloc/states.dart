@@ -1,3 +1,4 @@
+import 'package:auth_app/blocs/login_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 ///------------------------------------------------------------------
@@ -7,7 +8,7 @@ import 'package:equatable/equatable.dart';
 ///------------------------------------------------------------------
 
 /// Abstract class's document:
-/// State emitted by [LoginBloc] bloc
+/// State emitted by [CredentialsBloc] bloc
 abstract class CredentialsState extends Equatable {
   const CredentialsState();
 

@@ -1,3 +1,4 @@
+import 'package:auth_app/blocs/login_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 ///------------------------------------------------------------------
@@ -7,7 +8,7 @@ import 'package:equatable/equatable.dart';
 ///------------------------------------------------------------------
 
 /// Abstract class's document:
-/// Events for the [LoginBloc] bloc
+/// Events for the [CredentialsBloc] bloc
 abstract class CredentialsEvent extends Equatable {
   final String email;
   final String password;
