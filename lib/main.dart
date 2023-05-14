@@ -1,5 +1,7 @@
 import 'package:auth_app/localization/app_localization.dart';
 import 'package:auth_app/routes.dart';
+import 'package:auth_app/services/auth_api.dart';
+import 'package:auth_app/services/authentication.dart';
 import 'package:auth_app/services/test_api.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +20,8 @@ Future<void> main() async {
   );
 
   runApp(
-    Provider<TestAuthenticationApi>(
-      create: (_) => const TestAuthenticationApi(
-          fakeEmail: "ahu@xyz.org",
-          fakeUid: "tAy6xl8BdmPWGesR956rWa4g4Lu1",
-          success: true),
+    Provider<AuthenticationApi>(
+      create: (_) => AuthenticationService(),
       child: const LoginApp(),
     ),
   );
@@ -33,7 +32,7 @@ class LoginApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repository = context.select((TestAuthenticationApi r) => r);
+    final repository = context.select((AuthenticationApi r) => r);
 
     return BlocProvider<AuthenticationBloc>(
       create: (context) => AuthenticationBloc(repository),

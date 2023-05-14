@@ -23,60 +23,48 @@ class CredentialsBloc extends Bloc<CredentialsEvent, CredentialsState> {
     required this.authApi,
     required this.authBloc
 }) : super(const CredentialsInitial()) {
-    on<SignInButtonPressed>((event, emit){
-      _loginPressed(event);
-    });
+    on<SignInButtonPressed>((event, emit) => emit(_loginPressed(event)));
 
-    on<SignUpButtonPressed>((event, emit){
-      _registerPressed(event);
-    });
+    on<SignUpButtonPressed>((event, emit) => emit(_registerPressed(event)));
   }
 
-  // void _onSignInButtonPressed(SignInButtonPressed event, Emitter<CredentialsState> emit) {
-  //   emit(_loginPressed(event) as CredentialsState);
-  // }
-  //
-  // void _onSignUpButtonPressed(SignUpButtonPressed event, Emitter<CredentialsState> emit) {
-  //   emit(_registerPressed(event) as CredentialsState);
-  // }
-
-  Stream<CredentialsState> _loginPressed(CredentialsEvent event) async* {
-    yield const CredentialsLoginLoading();
+  CredentialsState _loginPressed(CredentialsEvent event) {
+    const CredentialsLoginLoading();
 
     try {
-      final success = (await authApi.signInWithEmailAndPassword(
+      final success = (authApi.signInWithEmailAndPassword(
           event.email,
           event.password
       )) ;
 
       if (success != null) {
         authBloc.add(const LoggedIn());
-        yield const CredentialsInitial();
+        return const CredentialsInitial();
       } else {
-        yield const CredentialsLoginFailure();
+        return const CredentialsLoginFailure();
       }
     } on FirebaseAuthException {
-      yield const CredentialsLoginFailure();
+      return const CredentialsLoginFailure();
     }
   }
 
-  Stream<CredentialsState> _registerPressed(CredentialsEvent event) async* {
-    yield const CredentialsRegisterLoading();
+  CredentialsState _registerPressed(CredentialsEvent event) {
+    const CredentialsRegisterLoading();
 
     try {
-      final success = await authApi.signUpWithEmailAndPassword(
+      final success = authApi.signUpWithEmailAndPassword(
           event.email,
           event.password
       );
 
       if (success != null) {
         authBloc.add(const LoggedIn());
-        yield const CredentialsInitial();
+        return const CredentialsInitial();
       } else {
-        yield const CredentialsRegisterFailure();
+        return const CredentialsRegisterFailure();
       }
     } on FirebaseAuthException {
-      yield const CredentialsRegisterFailure();
+      return const CredentialsRegisterFailure();
     }
   }
 }
