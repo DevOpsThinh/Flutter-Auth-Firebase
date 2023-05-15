@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+///------------------------------------------------------------------
+/// Topic: Flutter - Dart
+/// Author: Nguyen Truong Thinh
+/// Created At: 15/ 05/ 2023
+///------------------------------------------------------------------
+
 class MessageWidget extends StatelessWidget {
   final String message;
   final DateTime date;
@@ -43,7 +49,14 @@ class MessageWidget extends StatelessWidget {
                 children: <Widget>[
                   Row(
                     children: [
-                      Text(message),
+                      Expanded(
+                        child: Text(
+                          message,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 15,
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
                     ],
                   ),
                 ],

@@ -1,9 +1,17 @@
+import 'package:auth_app/data/user_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:auth_app/widgets/separator.dart';
 import 'package:auth_app/localization/app_localization.dart';
+import 'package:provider/provider.dart';
+
+///------------------------------------------------------------------
+/// Topic: Flutter - Dart
+/// Author: Nguyen Truong Thinh
+/// Updated At: 15/ 05/ 2023
+///------------------------------------------------------------------
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({super.key});
+  const LoginForm({Key? key}) : super(key: key);
 
   @override
   LoginFormState createState() => LoginFormState();
@@ -30,9 +38,25 @@ class LoginFormState extends State<LoginForm> {
     }
   }
 
-  void loginButtonPressed(BuildContext context) {}
+  void loginButtonPressed(BuildContext context, UserDao userDao) async {
+    final errorMessage =
+        await userDao.login(emailController.text, passwordController.text);
 
-  void registerButtonPressed(BuildContext context) {}
+    if (errorMessage != null) {
+      if (!mounted) return;
+      _showDialogue(context, errorMessage, 700);
+    }
+  }
+
+  void registerButtonPressed(BuildContext context, UserDao userDao) async {
+    final errorMessage =
+        await userDao.signUp(emailController.text, passwordController.text);
+
+    if (errorMessage != null) {
+      if (!mounted) return;
+      _showDialogue(context, errorMessage, 700);
+    }
+  }
 
   @override
   void dispose() {
@@ -41,8 +65,19 @@ class LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  void _showDialogue(BuildContext context, String text, int duration) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(text),
+        duration: Duration(milliseconds: duration),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userDao = Provider.of<UserDao>(context, listen: false);
+
     return LayoutBuilder(
       builder: (context, data) {
         var baseWidth = 250.0;
@@ -74,6 +109,16 @@ class LoginFormState extends State<LoginForm> {
                         prefixIcon: const Icon(Icons.email),
                         hintText: context.localize("email_account"),
                       ),
+                      autofocus: false,
+                      keyboardType: TextInputType.emailAddress,
+                      textCapitalization: TextCapitalization.none,
+                      autocorrect: false,
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return context.localize("invalid_field");
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   SizedBox(
@@ -85,6 +130,16 @@ class LoginFormState extends State<LoginForm> {
                         prefixIcon: const Icon(Icons.vpn_key),
                         hintText: context.localize("password"),
                       ),
+                      autofocus: false,
+                      keyboardType: TextInputType.visiblePassword,
+                      textCapitalization: TextCapitalization.none,
+                      autocorrect: false,
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return context.localize("invalid_field");
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
@@ -101,7 +156,7 @@ class LoginFormState extends State<LoginForm> {
                   backgroundColor: Colors.lightGreen),
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  loginButtonPressed(context);
+                  loginButtonPressed(context, userDao);
                 }
               },
               child: Text(context.localize("login")),
@@ -110,11 +165,14 @@ class LoginFormState extends State<LoginForm> {
 
             // Register
             TextButton(
-                key: const Key("registerButton"),
-                child: Text(context.localize("register")),
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {}
-                })
+              key: const Key("registerButton"),
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  registerButtonPressed(context, userDao);
+                }
+              },
+              child: Text(context.localize("register")),
+            )
           ],
         ));
       },

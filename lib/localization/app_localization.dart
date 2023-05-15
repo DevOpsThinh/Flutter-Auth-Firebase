@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:auth_app/localization/localization_delegate.dart';
 
+///------------------------------------------------------------------
+/// Topic: Flutter - Dart
+/// Author: Nguyen Truong Thinh
+/// Updated At: 15/ 05/ 2023
+///------------------------------------------------------------------
+
 extension LocalizationExt on BuildContext {
   String localize(String value) {
     final code = AppLocalization.of(this)?.locale.languageCode;
@@ -30,6 +36,7 @@ extension LocalizationExt on BuildContext {
 /// The list of supported locales can be set in [AppLocalizationDelegate].
 class AppLocalization {
   final Locale locale;
+
   const AppLocalization(this.locale);
 
   static AppLocalization? of(BuildContext context) =>
@@ -37,9 +44,10 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     "en": {
-      "title": "Chatting app",
+      "title": "Chat with Me",
       "login": "Login",
       "register": "Register",
+      "logout": "Logging out",
       "welcome": "Welcome!",
       "invalid_field": "Invalid value",
       "error_login": "Error while logging in",
@@ -47,12 +55,13 @@ class AppLocalization {
       "email_account": "Email Account",
       "password": "Password",
       "error_firebase": "Couldn't load Firebase",
+      "new_message": "Enter new message",
     },
-
-    "vn": {
-      "title": "Chatting app",
+    "vi": {
+      "title": "Trò chuyện cùng Tôi",
       "login": "Đăng nhập",
       "register": "Đăng ký",
+      "logout": "Đăng xuất",
       "welcome": "Chào mừng!",
       "invalid_field": "Trường dữ liệu không hợp lệ",
       "error_login": "Xuất hiện lỗi khi đăng nhập",
@@ -60,6 +69,7 @@ class AppLocalization {
       "email_account": "Tài khoản Email",
       "password": "Mật khẩu",
       "error_firebase": "Không thể sừ dụng dịch vụ của Firebase",
+      "new_message": "Nhập tin nhắn mới",
     },
   };
 }

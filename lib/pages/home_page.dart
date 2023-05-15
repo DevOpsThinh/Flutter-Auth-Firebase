@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:auth_app/pages/login_page.dart';
 import 'package:auth_app/pages/welcome_page.dart';
+import 'package:provider/provider.dart';
+
+import '../data/user_dao.dart';
+
+///------------------------------------------------------------------
+/// Topic: Flutter - Dart
+/// Author: Nguyen Truong Thinh
+/// Updated At: 16/ 05/ 2023
+///------------------------------------------------------------------
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -44,8 +53,15 @@ class HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return (
-        TabBarView(
+    return Consumer<UserDao>(
+      builder: (context, userDao, child) {
+        if (userDao.isLoggedIn()) {
+          loginTransition();
+        } else {
+          logoutTransition();
+        }
+
+        return (TabBarView(
           physics: const NeverScrollableScrollPhysics(),
           controller: tabController,
           children: const [
@@ -53,5 +69,7 @@ class HomePageState extends State<HomePage>
             WelcomePage(),
           ],
         ));
+      },
+    );
   }
 }

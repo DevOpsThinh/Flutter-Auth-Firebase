@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+///------------------------------------------------------------------
+/// Topic: Flutter - Dart
+/// Author: Nguyen Truong Thinh
+/// Updated At: 15/ 05/ 2023
+///------------------------------------------------------------------
+
 class Separator extends StatelessWidget {
   final double height;
 
