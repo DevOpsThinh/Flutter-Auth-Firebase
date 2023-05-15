@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:auth_app/blocs/authentication_bloc.dart';
 import 'package:auth_app/pages/login_page.dart';
 import 'package:auth_app/pages/welcome_page.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   HomePageState createState() => HomePageState();
@@ -46,27 +44,14 @@ class HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
-      builder: (context, state) {
-        // This state is emitted on successful authentication
-        if (state is AuthenticationSuccess) {
-          loginTransition();
-        }
-
-        // This state is emitted on logout
-        if (state is AuthenticationRevoked) {
-          logoutTransition();
-        }
-
-        return TabBarView(
+    return (
+        TabBarView(
           physics: const NeverScrollableScrollPhysics(),
           controller: tabController,
           children: const [
             LoginPage(),
             WelcomePage(),
           ],
-        );
-      },
-    );
+        ));
   }
 }

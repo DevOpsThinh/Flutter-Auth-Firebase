@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:auth_app/localization/localization_delegate.dart';
@@ -38,7 +37,7 @@ class AppLocalization {
 
   static final Map<String, Map<String, String>> _localizedValues = {
     "en": {
-      "title": "Login app",
+      "title": "Chatting app",
       "login": "Login",
       "register": "Register",
       "welcome": "Welcome!",
@@ -50,17 +49,17 @@ class AppLocalization {
       "error_firebase": "Couldn't load Firebase",
     },
 
-    "it": {
-      "title": "Login app",
-      "login": "Entra",
-      "register": "Registrati",
-      "welcome": "Benvenuto!",
-      "invalid_field": "Valore non valido",
-      "error_login": "Errore durante il login",
-      "error_register": "Errore durante la registrazione",
-      "username": "Nome utente",
-      "password": "Password",
-      "error_firebase": "Impossibile caricare Firebase",
+    "vn": {
+      "title": "Chatting app",
+      "login": "Đăng nhập",
+      "register": "Đăng ký",
+      "welcome": "Chào mừng!",
+      "invalid_field": "Trường dữ liệu không hợp lệ",
+      "error_login": "Xuất hiện lỗi khi đăng nhập",
+      "error_register": "Xuất hiện lỗi khi đăng ký",
+      "email_account": "Tài khoản Email",
+      "password": "Mật khẩu",
+      "error_firebase": "Không thể sừ dụng dịch vụ của Firebase",
     },
   };
 }

@@ -1,7 +1,6 @@
+import 'package:auth_app/pages/components/message_list.dart';
 import 'package:flutter/material.dart';
-import 'package:auth_app/blocs/authentication_bloc.dart';
 import 'package:auth_app/localization/app_localization.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -14,14 +13,12 @@ class WelcomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.exit_to_app),
-            onPressed: () => context
-                .read<AuthenticationBloc>()
-                .add(const LoggedOut()),
+            onPressed: () {}
           )
         ],
       ),
-      body: Center(
-        child: Text(context.localize("welcome")),
+      body: const Center(
+        child: MessageList(),
       ),
     );
   }

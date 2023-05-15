@@ -12,7 +12,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {
   /// **must**) match the list of _supportedLocales_ in [FomentApp]
   @override
   bool isSupported(Locale locale) =>
-      ['en', 'it'].contains(locale.languageCode);
+      ['en', 'vn'].contains(locale.languageCode);
 
   @override
   Future<AppLocalization> load(Locale locale) =>

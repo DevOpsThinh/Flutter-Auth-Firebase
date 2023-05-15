@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:auth_app/blocs/login_bloc.dart';
 import 'package:auth_app/widgets/separator.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:auth_app/localization/app_localization.dart';
 
 class LoginForm extends StatefulWidget {
@@ -32,23 +30,9 @@ class LoginFormState extends State<LoginForm> {
     }
   }
 
-  void loginButtonPressed(BuildContext context) {
-    context.read<CredentialsBloc>().add(
-        SignInButtonPressed(
-            email: emailController.text,
-            password: passwordController.text
-        )
-    );
-  }
+  void loginButtonPressed(BuildContext context) {}
 
-  void registerButtonPressed(BuildContext context) {
-    context.read<CredentialsBloc>().add(
-        SignUpButtonPressed(
-            email: emailController.text,
-            password: passwordController.text
-        )
-    );
-  }
+  void registerButtonPressed(BuildContext context) {}
 
   @override
   void dispose() {
@@ -69,114 +53,70 @@ class LoginFormState extends State<LoginForm> {
         }
 
         return SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const FlutterLogo(
-                  size: 70
-              ),
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const FlutterLogo(size: 70),
 
-              const Separator(50),
+            const Separator(50),
 
-              Form(
-                key: formKey,
-                child: Wrap(
-                  direction: Axis.vertical,
-                  spacing: 20,
-                  children: <Widget>[
-                    SizedBox(
-                      width: baseWidth - 30,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.email),
-                          hintText: context.localize("username"),
-                        ),
-                        controller: emailController,
+            Form(
+              key: formKey,
+              child: Wrap(
+                direction: Axis.vertical,
+                spacing: 20,
+                children: <Widget>[
+                  SizedBox(
+                    width: baseWidth - 30,
+                    child: TextFormField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.email),
+                        hintText: context.localize("email_account"),
                       ),
                     ),
-                    SizedBox(
-                      width: baseWidth - 30,
-                      child: TextFormField(
-                        obscureText: true,
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.vpn_key),
-                          hintText: context.localize("password"),
-                        ),
+                  ),
+                  SizedBox(
+                    width: baseWidth - 30,
+                    child: TextFormField(
+                      obscureText: true,
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.vpn_key),
+                        hintText: context.localize("password"),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            ),
 
-              const Separator(25),
+            const Separator(25),
 
-              // Login
-              BlocConsumer<CredentialsBloc, CredentialsState>(
-                listener: (context, state) {
-                  if (state is CredentialsLoginFailure) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          duration: const Duration(seconds: 2),
-                          content: Text(context.localize("error_login")),
-                        )
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  if (state is CredentialsLoginLoading) {
-                    return const CircularProgressIndicator();
-                  }
+            // Login
+            TextButton(
+              key: const Key("loginButton"),
+              style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.lightGreen),
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  loginButtonPressed(context);
+                }
+              },
+              child: Text(context.localize("login")),
+            ),
+            const Separator(5),
 
-                  return TextButton(
-                    key: const Key("loginButton"),
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.lightGreen
-                    ),
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        loginButtonPressed(context);
-                      }
-                    },
-                    child: Text(context.localize("login")),
-                  );
-                },
-              ),
-
-              const Separator(5),
-
-              // Register
-              BlocConsumer<CredentialsBloc, CredentialsState>(
-                listener: (context, state) {
-                  if (state is CredentialsRegisterFailure) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          duration: const Duration(seconds: 2),
-                          content: Text(context.localize("register_login")),
-                        )
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  if (state is CredentialsRegisterLoading) {
-                    return const CircularProgressIndicator();
-                  }
-
-                  return TextButton(
-                    key: const Key("registerButton"),
-                    child: Text(context.localize("register")),
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        registerButtonPressed(context);
-                      }
-                    },
-                  );
-                },
-              )
-            ],
-          ),
-        );
+            // Register
+            TextButton(
+                key: const Key("registerButton"),
+                child: Text(context.localize("register")),
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {}
+                })
+          ],
+        ));
       },
     );
   }
